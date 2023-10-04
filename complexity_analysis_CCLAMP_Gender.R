@@ -1,4 +1,4 @@
-setwd("C:/Users/u0149275/OneDrive - KU Leuven/Complexity/CCLAMP")
+setwd("./Datasets")
 
 library(readxl)
 library(ggplot2)
@@ -49,10 +49,10 @@ morph_and_synt <- data.frame("Morphology" = morph_total$morph_means,
                              "filename" = synt_total$filename,
                              "Syntax" = synt_total$synt_means,
                              "Year" = synt_total$year)
-#### Metadata ####
+#### Gender ####
 
 # read metadata file
-metadata <- read.delim("C-CLAMP_metadata.txt", header = FALSE, sep = "\t", fill = FALSE)
+metadata <- read.delim("C-CLAMP_metadata_gender.txt", header = FALSE, sep = "\t", fill = FALSE)
 
 names(metadata)[names(metadata) == 'V1'] <- 'filename'
 names(metadata)[names(metadata) == 'V4'] <- 'Author'
@@ -62,17 +62,7 @@ names(morph_and_synt)[names(morph_and_synt) == 'synt_total.filename'] <- 'filena
 
 meta_morph_and_synt <- merge(metadata, morph_and_synt, by="filename")
 
-#### Gender data ####
-
-# read gender data file
-genderdata <- read_xlsx("datasets_gender.xlsx", col_names = TRUE)
-
-gender <- read.csv("gender_dataset.csv")
-
-# merge data
-
-meta_morph_and_synt <- merge(genderdata, meta_morph_and_synt, by="Author")
-
+# model
 
 
 
