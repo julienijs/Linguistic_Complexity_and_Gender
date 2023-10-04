@@ -56,13 +56,21 @@ metadata <- read.delim("C-CLAMP_metadata_gender.txt", header = FALSE, sep = "\t"
 
 names(metadata)[names(metadata) == 'V1'] <- 'filename'
 names(metadata)[names(metadata) == 'V4'] <- 'Author'
+names(metadata)[names(metadata) == 'V10'] <- 'Gender'
 names(morph_and_synt)[names(morph_and_synt) == 'synt_total.filename'] <- 'filename'
 
 # merge data
 
 meta_morph_and_synt <- merge(metadata, morph_and_synt, by="filename")
 
-# model
+meta_morph_and_synt<-subset(meta_morph_and_synt, Gender!="mixed" & Gender!="NA")
+meta_morph_and_synt$Gender <- as.factor(meta_morph_and_synt$Gender)
 
+# model: morphology
 
+morph_gender_model <- lmer(morph_means ~ gender*year + (1|author), data=meta_morph_and_synt)
+morph_gender_model <- lm(Morphology ~ Gender, data=meta_morph_and_synt)
+summary(morph_gender_model)
+plot(allEffects(morph_gender_model))
 
+# model: syntax
