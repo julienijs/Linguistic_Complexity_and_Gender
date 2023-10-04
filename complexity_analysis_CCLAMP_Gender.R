@@ -80,17 +80,23 @@ print(author_table)
 
 # model: morphology
 
-morph_gender_model <- lm(Morphology ~ Gender*Decade, data=meta_morph_and_synt)
 morph_gender_model <- lm(Morphology ~ Gender, data=meta_morph_and_synt)
 summary(morph_gender_model)
 plot(allEffects(morph_gender_model))
 
+decade_morph_gender_model <- lm(Morphology ~ Gender*Decade, data=meta_morph_and_synt)
+summary(decade_morph_gender_model)
+plot(allEffects(decade_morph_gender_model))
+
 # model: syntax
 
-synt_gender_model <- lm(Syntax ~ Gender*Decade, data=meta_morph_and_synt)
 synt_gender_model <- lm(Syntax ~ Gender, data=meta_morph_and_synt)
 summary(synt_gender_model)
 plot(allEffects(synt_gender_model))
+
+decade_synt_gender_model <- lm(Syntax ~ Gender*Decade, data=meta_morph_and_synt)
+summary(decade_synt_gender_model)
+plot(allEffects(decade_synt_gender_model))
 
 # model: manova
 # check whether there is an association of the aggregate of the linguistic measures with gender
