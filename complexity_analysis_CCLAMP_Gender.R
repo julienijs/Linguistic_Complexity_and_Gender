@@ -95,5 +95,5 @@ plot(allEffects(synt_gender_model))
 # model: manova
 # check whether there is an association of the aggregate of the linguistic measures with gender
 
-summary(manova.model.overall <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt))
-
+manova.model <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt)
+summary(manova.model)
