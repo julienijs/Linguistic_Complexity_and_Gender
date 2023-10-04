@@ -66,16 +66,34 @@ meta_morph_and_synt <- merge(metadata, morph_and_synt, by="filename")
 meta_morph_and_synt<-subset(meta_morph_and_synt, Gender!="mixed" & Gender!="NA")
 meta_morph_and_synt$Gender <- as.factor(meta_morph_and_synt$Gender)
 
+meta_morph_and_synt$Decade <- meta_morph_and_synt$Year - meta_morph_and_synt$Year %% 10 # calculate decades
+
+# distribution of gender in dataset
+
+gender_table <- table(meta_morph_and_synt$Gender)
+print(gender_table)
+
+# distribution of authors in dataset
+
+author_table <- table(meta_morph_and_synt$Author)
+print(author_table)
+
 # model: morphology
 
-morph_gender_model <- lm(Morphology ~ Gender*Year, data=meta_morph_and_synt)
+morph_gender_model <- lm(Morphology ~ Gender*Decade, data=meta_morph_and_synt)
 morph_gender_model <- lm(Morphology ~ Gender, data=meta_morph_and_synt)
 summary(morph_gender_model)
 plot(allEffects(morph_gender_model))
 
 # model: syntax
 
-synt_gender_model <- lm(Syntax ~ Gender*Year, data=meta_morph_and_synt)
+synt_gender_model <- lm(Syntax ~ Gender*Decade, data=meta_morph_and_synt)
 synt_gender_model <- lm(Syntax ~ Gender, data=meta_morph_and_synt)
 summary(synt_gender_model)
 plot(allEffects(synt_gender_model))
+
+# model: manova
+# check whether there is an association of the aggregate of the linguistic measures with gender
+
+summary(manova.model.overall <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt))
+
