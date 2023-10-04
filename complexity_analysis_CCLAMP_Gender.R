@@ -74,3 +74,7 @@ summary(morph_gender_model)
 plot(allEffects(morph_gender_model))
 
 # model: syntax
+
+synt_gender_model <- lm(Syntax ~ Gender, data=meta_morph_and_synt)
+summary(synt_gender_model)
+plot(allEffects(synt_gender_model))
