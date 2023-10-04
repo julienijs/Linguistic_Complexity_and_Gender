@@ -68,13 +68,14 @@ meta_morph_and_synt$Gender <- as.factor(meta_morph_and_synt$Gender)
 
 # model: morphology
 
-morph_gender_model <- lmer(morph_means ~ gender*year + (1|author), data=meta_morph_and_synt)
+morph_gender_model <- lm(Morphology ~ Gender*Year, data=meta_morph_and_synt)
 morph_gender_model <- lm(Morphology ~ Gender, data=meta_morph_and_synt)
 summary(morph_gender_model)
 plot(allEffects(morph_gender_model))
 
 # model: syntax
 
+synt_gender_model <- lm(Syntax ~ Gender*Year, data=meta_morph_and_synt)
 synt_gender_model <- lm(Syntax ~ Gender, data=meta_morph_and_synt)
 summary(synt_gender_model)
 plot(allEffects(synt_gender_model))
