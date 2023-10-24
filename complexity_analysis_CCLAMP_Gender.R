@@ -81,7 +81,7 @@ gender_table <- table(meta_morph_and_synt$Decade, meta_morph_and_synt$Gender)
 print(gender_table)
 plot(gender_table, col=rep(2:1), main = "Gender per decade")
 
-# take subset of data from 1870 to 1950
+# take subset of data from 1870 to 1930
 meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1930)
 
 # model: morphology
@@ -92,7 +92,7 @@ plot(allEffects(morph_gender_model))
 
 print(ggplot(meta_morph_and_synt,
               aes(x = Gender, y = Morphology))+
-  ggtitle("Syntactic vs morphological complexity ratio") +
+  ggtitle("") +
   xlab("Gender")+
   ylab("Mean morphological complexity ratio")+
   geom_boxplot())
@@ -109,7 +109,7 @@ plot(allEffects(synt_gender_model))
 
 print(ggplot(meta_morph_and_synt,
              aes(x = Gender, y = Syntax))+
-        ggtitle("Syntactic vs morphological complexity ratio") +
+        ggtitle("") +
         xlab("Gender")+
         ylab("Mean word order rigidity ratio")+
         geom_boxplot())
