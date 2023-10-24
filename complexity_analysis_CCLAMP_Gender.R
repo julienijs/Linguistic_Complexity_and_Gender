@@ -4,6 +4,7 @@ library(readxl)
 library(ggplot2)
 library(matrixStats)
 library(effects)
+library(ggplot2)
 
 #### Morphology ####
 
@@ -68,21 +69,33 @@ meta_morph_and_synt$Gender <- as.factor(meta_morph_and_synt$Gender)
 
 meta_morph_and_synt$Decade <- meta_morph_and_synt$Year - meta_morph_and_synt$Year %% 10 # calculate decades
 
-# distribution of gender in dataset
-
-gender_table <- table(meta_morph_and_synt$Gender)
-print(gender_table)
 
 # distribution of authors in dataset
 
 author_table <- table(meta_morph_and_synt$Author)
 print(author_table)
 
+# distribution of gender in dataset
+
+gender_table <- table(meta_morph_and_synt$Decade, meta_morph_and_synt$Gender)
+print(gender_table)
+plot(gender_table, col=rep(2:1), main = "Gender per decade")
+
+# take subset of data from 1870 to 1950
+meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1950)
+
 # model: morphology
 
 morph_gender_model <- lm(Morphology ~ Gender, data=meta_morph_and_synt)
 summary(morph_gender_model)
 plot(allEffects(morph_gender_model))
+
+print(ggplot(meta_morph_and_synt,
+              aes(x = Gender, y = Morphology))+
+  ggtitle("Syntactic vs morphological complexity ratio") +
+  xlab("Gender")+
+  ylab("Mean morphological complexity ratio")+
+  geom_boxplot())
 
 decade_morph_gender_model <- lm(Morphology ~ Gender*Decade, data=meta_morph_and_synt)
 summary(decade_morph_gender_model)
@@ -94,6 +107,13 @@ synt_gender_model <- lm(Syntax ~ Gender, data=meta_morph_and_synt)
 summary(synt_gender_model)
 plot(allEffects(synt_gender_model))
 
+print(ggplot(meta_morph_and_synt,
+             aes(x = Gender, y = Syntax))+
+        ggtitle("Syntactic vs morphological complexity ratio") +
+        xlab("Gender")+
+        ylab("Mean word order rigidity ratio")+
+        geom_boxplot())
+
 decade_synt_gender_model <- lm(Syntax ~ Gender*Decade, data=meta_morph_and_synt)
 summary(decade_synt_gender_model)
 plot(allEffects(decade_synt_gender_model))
@@ -103,3 +123,7 @@ plot(allEffects(decade_synt_gender_model))
 
 manova.model <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt)
 summary(manova.model)
+
+# Granger Causality
+
+
