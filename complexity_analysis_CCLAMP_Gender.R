@@ -124,7 +124,7 @@ plot(allEffects(decade_synt_gender_model))
 manova.model <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt)
 summary(manova.model)
 
-# Granger Causality
+#### Granger Causality ####
 library(lmtest)
 library(CADFtest)
 library(dplyr)
