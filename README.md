@@ -1,4 +1,5 @@
 # Does linguistic complexity correlate with gender?
+Work in progress
 
 # References
 For more about information theory see:
