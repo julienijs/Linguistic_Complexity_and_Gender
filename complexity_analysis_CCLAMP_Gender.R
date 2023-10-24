@@ -82,7 +82,7 @@ print(gender_table)
 plot(gender_table, col=rep(2:1), main = "Gender per decade")
 
 # take subset of data from 1870 to 1950
-meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1950)
+meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1930)
 
 # model: morphology
 
@@ -125,5 +125,47 @@ manova.model <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_s
 summary(manova.model)
 
 # Granger Causality
+library(lmtest)
+library(CADFtest)
+library(dplyr)
+
+# make time series: morphology male
+morph_male_ts <- ts((meta_morph_and_synt %>%
+                       filter(Gender == "male") %>%
+                       group_by(Decade) %>%
+                       summarise(Morphology = mean(Morphology)))[, 2])
+
+CADFtest(morph_male_ts) # not significant: no unit root
+
+# make time series: morphology female
+morph_female_ts <- ts((meta_morph_and_synt %>%
+                       filter(Gender == "female") %>%
+                       group_by(Decade) %>%
+                       summarise(Morphology = mean(Morphology)))[, 2])
+
+CADFtest(morph_female_ts) # not significant: no unit root
+
+# granger causality test
+grangertest(morph_female_ts ~ morph_male_ts, order = 1) # not significant
+grangertest(morph_male_ts ~ morph_female_ts, order = 1) # not significant
 
 
+# make time series: syntax male
+synt_male_ts <- ts((meta_morph_and_synt %>%
+                       filter(Gender == "male") %>%
+                       group_by(Decade) %>%
+                       summarise(Syntax = mean(Syntax)))[, 2])
+
+CADFtest(synt_male_ts) # not significant: no unit root
+
+# make time series: syntax female
+synt_female_ts <- ts((meta_morph_and_synt %>%
+                         filter(Gender == "female") %>%
+                         group_by(Decade) %>%
+                         summarise(Syntax = mean(Syntax)))[, 2])
+
+CADFtest(synt_female_ts) # not significant: no unit root
+
+# granger causality test
+grangertest(synt_female_ts ~ synt_male_ts, order = 1) # not significant
+grangertest(synt_male_ts ~ synt_female_ts, order = 1) # not significant
