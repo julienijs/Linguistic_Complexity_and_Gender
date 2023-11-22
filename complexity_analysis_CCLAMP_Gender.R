@@ -132,7 +132,7 @@ print(ggplot(meta_morph_and_synt, aes(x=Decade, y=Morphology, color=Gender)) +
   geom_smooth())
 
 print(ggplot(meta_morph_and_synt, aes(x=Decade, y=Syntax, color=Gender)) + 
-        geom_smooth())
+  geom_smooth())
 
 #### Granger Causality ####
 library(lmtest)
