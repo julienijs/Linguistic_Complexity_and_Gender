@@ -82,7 +82,9 @@ print(gender_table)
 plot(gender_table, col=rep(2:1), main = "Gender per decade")
 
 # take subset of data from 1870 to 1930
-meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1930)
+#meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1930)
+
+meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1840)
 
 # model: morphology
 
@@ -123,6 +125,14 @@ plot(allEffects(decade_synt_gender_model))
 
 manova.model <- manova(cbind(Morphology, Syntax) ~ Gender, data=meta_morph_and_synt)
 summary(manova.model)
+
+# Visualisation
+
+print(ggplot(meta_morph_and_synt, aes(x=Decade, y=Morphology, color=Gender)) + 
+  geom_smooth())
+
+print(ggplot(meta_morph_and_synt, aes(x=Decade, y=Syntax, color=Gender)) + 
+        geom_smooth())
 
 #### Granger Causality ####
 library(lmtest)
