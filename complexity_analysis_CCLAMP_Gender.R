@@ -79,12 +79,12 @@ print(author_table)
 
 gender_table <- table(meta_morph_and_synt$Decade, meta_morph_and_synt$Gender)
 print(gender_table)
-plot(gender_table, col=rep(2:1), main = "Gender per decade")
+plot(gender_table, col=rep(2:1), main = "Gender per decade", las=2, border = 0, cex.axis=1)
 
 # take subset of data from 1870 to 1930
 #meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1870 & Decade <= 1930)
 
-meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1840)
+#meta_morph_and_synt <- subset(meta_morph_and_synt, Decade >= 1840)
 
 # model: morphology
 
